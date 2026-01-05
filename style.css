@@ -14,10 +14,6 @@ body {
     display: flex;
     justify-content: center;
     padding: 2rem 1rem;
-    /* TAMBAHAN: Biar gak bisa digeser-geser ke kanan-kiri-atas-bawah */
-    overflow: hidden; 
-    position: fixed;
-    width: 100%;
 }
 
 @keyframes gradientBG {
@@ -30,8 +26,6 @@ body {
     width: 100%;
     max-width: 400px;
     text-align: center;
-    /* Biar tetap di tengah karena body-nya fixed */
-    margin: auto; 
 }
 
 .profile {
@@ -39,86 +33,16 @@ body {
     animation: slideUpFade 0.8s ease forwards;
 }
 
-/* --- REVISI EFEK LINGKARAN PROFILE --- */
-.avatar {
-    position: relative;
-    width: 176px; 
-    height: 176px;
-    margin: 0 auto 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* REVISI: Supaya shine TIDAK keluar dari lingkaran */
-    border-radius: 50%; 
-    overflow: hidden; 
-}
-
-/* Cahaya yang muterin lingkaran */
-.avatar::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: conic-gradient(transparent, transparent, transparent, #38bdf8);
-    animation: rotateCahaya 3s linear infinite;
-    z-index: 1;
-}
-
-/* Efek Glow (pijar) di belakang cahaya utama */
-.avatar::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: conic-gradient(transparent, transparent, transparent, #38bdf8);
-    animation: rotateCahaya 3s linear infinite;
-    filter: blur(15px);
-    opacity: 0.7;
-    z-index: 0;
-}
-
-/* Efek berkilau (Shine) sekilas - DIPERBAIKI */
-.avatar-shine {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to right, 
-        transparent, 
-        rgba(255, 255, 255, 0.4), 
-        transparent
-    );
-    transform: skewX(-25deg);
-    z-index: 4; /* Di atas gambar */
-    animation: flashShine 4s infinite;
-    pointer-events: none;
-}
-
 .avatar img {
     width: 160px;
     height: 160px;
     background: #1e293b;
     border-radius: 50%;
+    /* Border dengan efek biru elektrik tipis */
     border: 4px solid rgba(56, 189, 248, 0.3);
+    margin-bottom: 1rem;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     object-fit: cover;
-    position: relative;
-    z-index: 3; /* Di bawah shine, di atas border muter */
-}
-
-/* Animasi */
-@keyframes rotateCahaya {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes flashShine {
-    0% { left: -150%; }
-    30% { left: 150%; }
-    100% { left: 150%; }
 }
 
 .profile h1 {
@@ -129,7 +53,7 @@ body {
 }
 
 .profile p {
-    color: #bae6fd;
+    color: #bae6fd; /* Biru muda pucat agar elegan */
     font-weight: 500;
     margin-top: 5px;
     letter-spacing: 0.5px;
@@ -142,7 +66,7 @@ body {
 }
 
 .link-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05); /* Lebih gelap transparan */
     backdrop-filter: blur(12px); 
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -161,14 +85,14 @@ body {
 }
 
 .link-card:hover {
-    background: rgba(56, 189, 248, 0.15);
+    background: rgba(56, 189, 248, 0.15); /* Biru highlight saat hover */
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     border: 1px solid rgba(56, 189, 248, 0.4);
 }
 
 .highlight {
-    background: #38bdf8;
+    background: #38bdf8; /* Warna Cyan solid untuk Hire Me */
     color: #0f172a;
     border: none;
 }
