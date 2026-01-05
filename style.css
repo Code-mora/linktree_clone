@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Quicksand', sans-serif;
+    /* REVISI: Warna diubah ke Midnight & Deep Blue biar lebih Pro */
     background: linear-gradient(-45deg, #0f172a, #1e293b, #0369a1, #075985);
     background-size: 400% 400%;
     animation: gradientBG 12s ease infinite;
@@ -32,19 +33,19 @@ body {
     animation: slideUpFade 0.8s ease forwards;
 }
 
-/* --- UPDATE AVATAR DENGAN EFEK CAHAYA MUTER & SHINE --- */
+/* --- TAMBAHAN EFEK LINGKARAN PROFILE --- */
 .avatar {
     position: relative;
-    width: 175px; /* Ruang untuk cahaya */
-    height: 175px;
-    margin: 0 auto 1.5rem;
+    width: 176px; /* Ukuran disesuaikan untuk menampung border cahaya */
+    height: 176px;
+    margin: 0 auto 1rem;
     display: flex;
-    align-items: center;
     justify-content: center;
-    overflow: visible; /* Biar glow tidak terpotong */
+    align-items: center;
+    overflow: visible;
 }
 
-/* Siluet Cahaya Muter */
+/* Cahaya yang muterin lingkaran */
 .avatar::before {
     content: '';
     position: absolute;
@@ -52,10 +53,10 @@ body {
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(transparent, transparent, transparent, #38bdf8);
-    animation: rotate 3s linear infinite;
+    animation: rotateCahaya 3s linear infinite;
 }
 
-/* Efek Glow Berpijar */
+/* Efek Glow (pijar) di belakang cahaya utama */
 .avatar::after {
     content: '';
     position: absolute;
@@ -63,23 +64,12 @@ body {
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(transparent, transparent, transparent, #38bdf8);
-    animation: rotate 3s linear infinite;
+    animation: rotateCahaya 3s linear infinite;
     filter: blur(15px);
     opacity: 0.7;
 }
 
-.avatar img {
-    width: 160px;
-    height: 160px;
-    background: #1e293b;
-    border-radius: 50%;
-    position: relative;
-    z-index: 2;
-    border: 4px solid #0f172a; 
-    object-fit: cover;
-}
-
-/* Kilauan Sekilas (Shine) */
+/* Efek berkilau (Shine) sekilas */
 .avatar-shine {
     position: absolute;
     top: 0;
@@ -89,13 +79,38 @@ body {
     background: linear-gradient(
         to right, 
         transparent, 
-        rgba(255, 255, 255, 0.3), 
+        rgba(255, 255, 255, 0.4), 
         transparent
     );
     transform: skewX(-25deg);
     z-index: 3;
-    border-radius: 50%; /* Mengikuti bentuk avatar */
-    animation: shine 4s infinite;
+    animation: flashShine 4s infinite;
+}
+
+.avatar img {
+    width: 160px;
+    height: 160px;
+    background: #1e293b;
+    border-radius: 50%;
+    /* Kode lama dipertahankan */
+    border: 4px solid rgba(56, 189, 248, 0.3);
+    margin-bottom: 0; /* Dipindah ke container avatar */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+}
+
+/* Animasi Baru */
+@keyframes rotateCahaya {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes flashShine {
+    0% { left: -100%; }
+    20% { left: 150%; }
+    100% { left: 150%; }
 }
 
 .profile h1 {
@@ -106,7 +121,7 @@ body {
 }
 
 .profile p {
-    color: #bae6fd;
+    color: #bae6fd; /* Biru muda pucat agar elegan */
     font-weight: 500;
     margin-top: 5px;
     letter-spacing: 0.5px;
@@ -119,7 +134,7 @@ body {
 }
 
 .link-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05); /* Lebih gelap transparan */
     backdrop-filter: blur(12px); 
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -138,14 +153,14 @@ body {
 }
 
 .link-card:hover {
-    background: rgba(56, 189, 248, 0.15);
+    background: rgba(56, 189, 248, 0.15); /* Biru highlight saat hover */
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     border: 1px solid rgba(56, 189, 248, 0.4);
 }
 
 .highlight {
-    background: #38bdf8;
+    background: #38bdf8; /* Warna Cyan solid untuk Hire Me */
     color: #0f172a;
     border: none;
 }
@@ -162,21 +177,9 @@ body {
     font-size: 0.8rem;
 }
 
-/* --- KEYFRAMES ANIMASI --- */
 @keyframes slideUpFade {
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes shine {
-    0% { left: -100%; }
-    20% { left: 150%; }
-    100% { left: 150%; }
 }
 
 /* Jeda Delay */
@@ -184,4 +187,4 @@ body {
 .link-card:nth-child(2) { animation-delay: 0.4s; }
 .link-card:nth-child(3) { animation-delay: 0.6s; }
 .link-card:nth-child(4) { animation-delay: 0.8s; }
-.link-child:nth-child(5) { animation-delay: 1s; }
+.link-card:nth-child(5) { animation-delay: 1s; }
