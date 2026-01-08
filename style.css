@@ -4,16 +4,25 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
 body {
     font-family: 'Quicksand', sans-serif;
     /* REVISI: Warna diubah ke Midnight & Deep Blue biar lebih Pro */
     background: linear-gradient(-45deg, #0f172a, #1e293b, #0369a1, #075985);
     background-size: 400% 400%;
     animation: gradientBG 12s ease infinite;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
-    padding: 2rem 1rem;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
 }
 
 @keyframes gradientBG {
@@ -26,6 +35,18 @@ body {
     width: 100%;
     max-width: 400px;
     text-align: center;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2rem 1rem;
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+    display: none;
 }
 
 .profile {
@@ -33,59 +54,74 @@ body {
     animation: slideUpFade 0.8s ease forwards;
 }
 
-/* --- TAMBAHAN EFEK CAHAYA MUTER & SHINE (Full Update) --- */
+/* --- PROFESSIONAL AVATAR ANIMATION WITH MAGNETIC HOVER --- */
 .avatar {
     position: relative;
-    width: 176px; /* Ukuran menyesuaikan agar ada ruang cahaya */
+    width: 176px;
     height: 176px;
     margin: 0 auto 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
-    overflow: hidden; /* Penting: supaya shine tetap di dalam lingkaran */
+    animation: avatarEntrance 0.8s ease-out forwards, floatAvatar 3s ease-in-out 0.8s infinite;
+    cursor: pointer;
+    /* Enable 3D transforms */
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out; /* Smooth magnetic follow */
 }
 
-/* Siluet cahaya yang muter */
+/* Rotating gradient border - Premium effect */
 .avatar::before {
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
-    background: conic-gradient(transparent, transparent, transparent, #38bdf8);
-    animation: rotateCahaya 3s linear infinite;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 60deg,
+        rgba(56, 189, 248, 0.8) 120deg,
+        rgba(125, 211, 252, 0.6) 180deg,
+        transparent 240deg,
+        transparent 360deg
+    );
+    animation: rotateGlow 4s linear infinite;
     z-index: 1;
+    transition: opacity 0.3s ease;
 }
 
-/* Efek Glow di belakang cahaya muter */
+/* Soft glow behind the gradient */
 .avatar::after {
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
-    background: conic-gradient(transparent, transparent, transparent, #38bdf8);
-    animation: rotateCahaya 3s linear infinite;
-    filter: blur(15px);
-    opacity: 0.7;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 60deg,
+        rgba(56, 189, 248, 0.4) 120deg,
+        rgba(125, 211, 252, 0.3) 180deg,
+        transparent 240deg,
+        transparent 360deg
+    );
+    animation: rotateGlow 4s linear infinite;
+    filter: blur(20px);
+    opacity: 0.6;
     z-index: 0;
+    transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-/* Efek Berkilau (Shine) sekilas di atas foto */
-.avatar-shine {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to right, 
-        transparent, 
-        rgba(255, 255, 255, 0.3), 
-        transparent
-    );
-    transform: skewX(-25deg);
-    z-index: 4;
-    animation: flashShine 4s infinite;
+/* Enhanced hover effect with stronger glow */
+.avatar:hover::before {
+    opacity: 1;
+}
+
+.avatar:hover::after {
+    opacity: 0.9;
+    filter: blur(30px);
 }
 
 .avatar img {
@@ -93,26 +129,57 @@ body {
     height: 160px;
     background: #1e293b;
     border-radius: 50%;
-    /* Border dengan efek biru elektrik tipis (Tetap Sesuai Request) */
-    border: 4px solid rgba(56, 189, 248, 0.3);
-    margin-bottom: 0; /* Margin dipindah ke container .avatar */
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    border: 4px solid rgba(30, 41, 59, 0.8);
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(56, 189, 248, 0.1);
     object-fit: cover;
     position: relative;
     z-index: 3;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* Animasi Baru */
-@keyframes rotateCahaya {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.avatar:hover img {
+    box-shadow: 
+        0 20px 60px rgba(56, 189, 248, 0.4),
+        inset 0 0 40px rgba(56, 189, 248, 0.3);
+    border-color: rgba(56, 189, 248, 0.6);
 }
 
-@keyframes flashShine {
-    0% { left: -150%; }
-    20% { left: 150%; }
-    100% { left: 150%; }
+/* Smooth entrance animation */
+@keyframes avatarEntrance {
+    0% { 
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    100% { 
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
+
+/* Subtle floating animation */
+@keyframes floatAvatar {
+    0%, 100% { 
+        transform: translateY(0px);
+    }
+    50% { 
+        transform: translateY(-8px);
+    }
+}
+
+/* Rotating glow effect - smooth and professional */
+@keyframes rotateGlow {
+    0% { 
+        transform: rotate(0deg);
+    }
+    100% { 
+        transform: rotate(360deg);
+    }
+}
+
+
 
 .profile h1 {
     color: white;
@@ -189,3 +256,74 @@ body {
 .link-card:nth-child(3) { animation-delay: 0.6s; }
 .link-card:nth-child(4) { animation-delay: 0.8s; }
 .link-card:nth-child(5) { animation-delay: 1s; }
+
+/* Mobile Responsive Optimization */
+@media (max-width: 480px) {
+    body {
+        padding: 1.5rem 1rem;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    /* Avatar lebih kecil di mobile */
+    .avatar {
+        width: 140px;
+        height: 140px;
+    }
+
+    .avatar::before,
+    .avatar::after {
+        width: 100%;
+        height: 100%;
+    }
+
+    .avatar img {
+        width: 124px;
+        height: 124px;
+        border: 3px solid rgba(30, 41, 59, 0.8);
+    }
+
+    /* Text lebih kecil di mobile */
+    .profile h1 {
+        font-size: 1.4rem;
+    }
+
+    .profile p {
+        font-size: 0.9rem;
+    }
+
+    /* Link cards lebih compact */
+    .link-card {
+        padding: 0.9rem 1.5rem;
+        font-size: 0.95rem;
+        gap: 10px;
+    }
+
+    .links {
+        gap: 1rem;
+    }
+
+    .footer {
+        margin-top: 2rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Tablet optimization */
+@media (min-width: 481px) and (max-width: 768px) {
+    .avatar {
+        width: 160px;
+        height: 160px;
+    }
+
+    .avatar img {
+        width: 144px;
+        height: 144px;
+    }
+
+    .profile h1 {
+        font-size: 1.5rem;
+    }
+}
